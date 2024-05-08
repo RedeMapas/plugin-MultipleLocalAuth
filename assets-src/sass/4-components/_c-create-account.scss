@@ -319,3 +319,9 @@
     align-items: center;
     gap: 12px;
 }
+
+.messages {
+    &__content {
+        align-items: flex-end;
+    }
+}
