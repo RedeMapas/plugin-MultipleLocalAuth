@@ -47,6 +47,10 @@ class Plugin extends \MapasCulturais\Plugin {
                 $_SERVER['HTTP_HOST'] = 'localhost';
             }
         }
+
+        $app->hook('component(mc-icon).iconset', function(&$iconset) {
+            $iconset['check-no-circle'] = 'material-symbols:check';
+        });
     }
     
     public function register() {

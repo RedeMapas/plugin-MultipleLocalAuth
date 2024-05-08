@@ -3,9 +3,9 @@
 use MapasCulturais\i;
 
 return [
-    '{num} caracteres' => i::__('{num} caracteres'),
-    'pelo menos uma letra maiúscula' => i::__('pelo menos uma letra maiúscula'),
-    'pelo menos uma letra minúscula' => i::__('pelo menos uma letra minúscula'),
-    'um caracter especial' => i::__('um caracter especial (! @ # $ % & * < > ?)'),
-    'um número' => i::__('um número'),
+    'pelo menos {num} caracteres' => i::__('Pelo menos {num} caracteres'),
+    'pelo menos uma letra maiúscula' => i::__('Pelo menos uma letra maiúscula'),
+    'pelo menos uma letra minúscula' => i::__('Pelo menos uma letra minúscula'),
+    'pelo menos um caracter especial' => i::__('Pelo menos um caracter especial (! @ # $ % & * < > ?)'),
+    'pelo menos um número' => i::__('Pelo menos um número'),
 ];
