@@ -46,29 +46,35 @@ app.component('password-strongness', {
 
     methods: {
         getErrors() {
-            const errors = [];
+            const errors = [
+                {
+                    "rule": this.passwordRules.minimumPasswordLength,
+                    "error": this.password.length < this.passwordRules.minimumPasswordLength,
+                    "message": this.text('pelo menos {num} caracteres').replace('{num}', this.passwordRules.minimumPasswordLength)
+                },
+                {
+                    "rule": this.passwordRules.passwordMustHaveCapitalLetters,
+                    "error": this.passwordRules.passwordMustHaveCapitalLetters && !this.passwordMustHaveCapitalLetters.test(this.password),
+                    "message": this.text('pelo menos uma letra maiúscula')
+                },
+                {
+                    "rule": this.passwordRules.passwordMustHaveLowercaseLetters,
+                    "error": this.passwordRules.passwordMustHaveLowercaseLetters && !this.passwordMustHaveLowercaseLetters.test(this.password),
+                    "message": this.text('pelo menos uma letra minúscula')
+                },
+                {
+                    "rule": this.passwordRules.passwordMustHaveSpecialCharacters,
+                    "error": this.passwordRules.passwordMustHaveSpecialCharacters && !this.passwordMustHaveSpecialCharacters.test(this.password),
+                    "message": this.text('pelo menos um caracter especial')
+                },
+                {
+                    "rule": this.passwordRules.passwordMustHaveNumbers,
+                    "error": this.passwordRules.passwordMustHaveNumbers && !this.passwordMustHaveNumbers.test(this.password),
+                    "message": this.text('pelo menos um número')
+                }
+            ];
 
-            if (this.password.length < this.passwordRules.minimumPasswordLength) {
-                errors.push(this.text('{num} caracteres').replace('{num}', this.passwordRules.minimumPasswordLength));
-            }
-
-            if (this.passwordRules.passwordMustHaveCapitalLetters && !this.passwordMustHaveCapitalLetters.test(this.password)) {
-                errors.push(this.text('pelo menos uma letra maiúscula'));
-            }
-
-            if (this.passwordRules.passwordMustHaveLowercaseLetters && !this.passwordMustHaveLowercaseLetters.test(this.password)) {
-                errors.push(this.text('pelo menos uma letra minúscula'));
-            }
-
-            if (this.passwordRules.passwordMustHaveSpecialCharacters && !this.passwordMustHaveSpecialCharacters.test(this.password)) {
-                errors.push(this.text('um caracter especial'));
-            }
-
-            if (this.passwordRules.passwordMustHaveNumbers && !this.passwordMustHaveNumbers.test(this.password)) {
-                errors.push(this.text('um número'));
-            }
-
-            return errors.join(', ');
+            return errors;
         },
 
         rules() {
