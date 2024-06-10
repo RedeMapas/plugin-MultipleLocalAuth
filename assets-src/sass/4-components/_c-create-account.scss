@@ -294,19 +294,19 @@
 
         &.fraco {
             &::-webkit-progress-value {
-                background: red;    
+                background: #D2381B;    
             }
         }
 
         &.medio {
             &::-webkit-progress-value {
-                background: yellow;   
+                background: #FFCA3A;   
             }
         }
 
         &.forte {
             &::-webkit-progress-value {
-                background: green;    
+                background: #559931;    
             }
         }
     }

@@ -119,14 +119,14 @@ app.component('create-account', {
                     currentPercent = currentPercent + percentToAdd;
                 }
 
-                let strongness = currentPercent.toFixed(0)
+                let strongness = currentPercent.toFixed(0);
                 if (strongness >= 0 && strongness <= 40) {
                     this.strongnessClass = 'fraco';
                 }
-                if (strongness >= 40 && strongness <= 90) {
+                if (strongness > 40 && strongness <= 80) {
                     this.strongnessClass = 'medio';
                 }
-                if (strongness >= 90 && strongness <= 100) {
+                if (strongness > 80 && strongness <= 100) {
                     this.strongnessClass = 'forte';
                 }
 
