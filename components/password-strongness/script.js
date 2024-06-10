@@ -121,7 +121,7 @@ app.component('password-strongness', {
                     currentPercent = currentPercent + percentToAdd;
                 }
 
-                return currentPercent.toFixed(0)
+                return currentPercent.toFixed(0);
             } else {
                 return 0;
             }
@@ -129,9 +129,9 @@ app.component('password-strongness', {
         },
 
         strongnessClass() {
-            if (this.strongness <= 40) {
+            if (this.strongness() <= 40) {
                 return 'fraco';
-            } else if (this.strongness <= 85) {
+            } else if (this.strongness() <= 80) {
                 return 'medio';
             } else {
                 return 'forte';

@@ -17,7 +17,7 @@ use MapasCulturais\i;
 <div v-if="getErrors()" class="password-rules">
     <?= i::__('A senha deve conter:') ?><br>
     <div class="password-errors" v-for="error in getErrors()">
-        <div v-if="error.error" style="color:red;"><mc-icon name="close"></mc-icon> <span>{{error.message}}</span></div>
-        <div v-else style="color:green;"><mc-icon name="check-no-circle"></mc-icon> <span>{{error.message}}</span></div>
+        <div v-if="error.error" style="color:#D2381B;"><mc-icon name="close"></mc-icon> <span>{{error.message}}</span></div>
+        <div v-else style="color:#559931;"><mc-icon name="check-no-circle"></mc-icon> <span>{{error.message}}</span></div>
     </div>
 </div>
