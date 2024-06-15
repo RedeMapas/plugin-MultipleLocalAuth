@@ -1,18 +1,18 @@
-.inactive {
-    display: none;
-}
+.controller-auth {
+    background-color: var(--mc-gray-100);
 
-.info-message {
-    max-width: 730px;
-    margin: 0 auto;
-    padding-top: 30px;
-    display: flex;
+    .mc-card {
+        padding: 25px 45px;
 
-    @media (max-width: 760px) {
-        padding: 0 15px;
+        &.no-title {
+            .mc-card__title {
+                display: none;
+            }
+        }
     }
 
-    .status-card {
-        width: 100%;
+    // adds inner space on hover popper
+    .v-popper__inner {
+        padding: 3px 10px;
     }
 }

@@ -19,16 +19,27 @@ class Plugin extends \MapasCulturais\Plugin {
         i::load_textdomain( 'multipleLocal', __DIR__ . "/translations" );
         
         // Load JS & CSS
-        $app->hook('<<GET|POST>>(auth.<<*>>)', function() use ($app) {
-            $app->view->enqueueScript('app', 'multipleLocal', 'js/app.js');
-            $app->view->enqueueStyle('app', 'multipleLocal', 'css/app.css');
-            $app->view->enqueueStyle('app', 'fontawesome', 'https://use.fontawesome.com/releases/v5.8.2/css/all.css');
-            $app->view->enqueueStyle('app', 'multipleLocal-govbr', 'css/govbr.css');
+        $app->hook('GET(<<auth|panel>>.<<*>>):before', function() use ($app) {
+            $app->view->enqueueStyle('app-v2', 'multipleLocal-v2', 'css/plugin-MultiplLocalAuth.css');
         });
-        
-        $app->hook('<<GET|POST|ALL>>(panel.<<*>>):before', function() use ($app) {
-            $app->view->enqueueStyle('app', 'multipleLocal', 'css/multipleLocal.css');
-            $app->view->enqueueStyle('app', 'multipleLocal', 'css/app.css');
+
+        $app->hook('GET(auth.<<index|register>>)', function() use($app) {
+            if (env('GOOGLE_RECAPTCHA_SITEKEY', false)) {
+                $app->view->enqueueScript('app-v2', 'multipleLocal-v2', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit');
+            }
+        });
+
+        $app->hook('template(panel.<<my-account|user-detail>>.user-mail):end ', function() {
+            /** @var \MapasCulturais\Theme $this */
+            $this->part('password/change-password');
+        });
+
+        $app->hook('entity(User).permissionsList,doctrine.emum(permission_action).values', function (&$permissions) {
+            $permissions[] = 'changePassword';
+        });
+
+        $app->hook('module(UserManagement).permissionsLabels', function(&$labels) {
+            $labels['changePassword'] = i::__('modificar senha');
         });
 
         if (php_sapi_name() == "cli") {
@@ -36,16 +47,19 @@ class Plugin extends \MapasCulturais\Plugin {
                 $_SERVER['HTTP_HOST'] = 'localhost';
             }
         }
+
+        $app->hook('component(mc-icon).iconset', function(&$iconset) {
+            $iconset['check-no-circle'] = 'material-symbols:check';
+        });
     }
     
     public function register() {
         $this->registerUserMetadata(Provider::$passMetaName, ['label' => i::__('Senha')]);
-        
         $this->registerUserMetadata(Provider::$recoverTokenMetadata, ['label' => i::__('Token para recuperação de senha')]);
         $this->registerUserMetadata(Provider::$recoverTokenTimeMetadata, ['label' => i::__('Timestamp do token para recuperação de senha')]);
         $this->registerUserMetadata(Provider::$accountIsActiveMetadata, ['label' => i::__('Conta ativa?')]);
         $this->registerUserMetadata(Provider::$tokenVerifyAccountMetadata, ['label' => i::__('Token de verificação')]);
         $this->registerUserMetadata(Provider::$loginAttempMetadata, ['label' => i::__('Número de tentativas de login')]);
-        $this->registerUserMetadata(Provider::$timeBlockedloginAttempMetadata, ['label' => i::__('Tempo de bloquei por excesso de tentativas')]);        
+        $this->registerUserMetadata(Provider::$timeBlockedloginAttempMetadata, ['label' => i::__('Tempo de bloqueio por excesso de tentativas')]);        
     }
 }
