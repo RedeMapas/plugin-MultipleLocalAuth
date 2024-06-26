@@ -301,12 +301,12 @@ app.component('create-account', {
             if (!this.agent.name) {
                 errors.agent.push(__('Nome obrigatório', 'create-account'));
             }
-            if (!this.agent.shortDescription) {
-                errors.agent.push(__('Descrição obrigatória', 'create-account'));
-            }
-            if (this.agent.terms.area.length == 0) {
-                errors.agent.push(__('Área de atuação obrigatória', 'create-account'));
-            }
+            // if (!this.agent.shortDescription) {
+            //     errors.agent.push(__('Descrição obrigatória', 'create-account'));
+            // }
+            // if (this.agent.terms.area.length == 0) {
+            //     errors.agent.push(__('Área de atuação obrigatória', 'create-account'));
+            // }
             if (errors.agent.length > 0) {
                 this.throwErrors(errors);
                 return false;
