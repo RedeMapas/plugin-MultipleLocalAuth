@@ -1464,7 +1464,7 @@ class Provider extends \MapasCulturais\AuthProvider {
         $_SESSION['multipleLocalUserId'] = $user->id;
     }
     
-    protected function _createUser($response) {
+    function _createUser($response) {
         $app = App::i();
 
         $app->disableAccessControl();
