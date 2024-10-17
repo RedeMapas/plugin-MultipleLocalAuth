@@ -424,44 +424,6 @@ class Provider extends \MapasCulturais\AuthProvider {
             echo "<li><a href='$url' $active><span class='icon icon-my-account'></span> $label</a></li>";
         
         });
-        
-        $app->hook('ALL(panel.my-account)', function () use($app,$config){
-        
-            $email = filter_var($app->request->post('email'),FILTER_SANITIZE_EMAIL);
-            if ($email) {
-                $app->auth->processMyAccount();
-            }
-            
-            $has_seal_govbr = false;
-            if($config['strategies']['govbr']['visible']){
-                
-                $agent = $app->user->profile;
-                $relations = $agent->getSealRelations();
-                $sealId = $config['strategies']['govbr']['applySealId'];
-
-                foreach($relations as $relation){
-                    if($relation->seal->id == $sealId){
-                        $has_seal_govbr = true;
-                        break;
-                    }
-                }
-            }
-            
-            $active = $this->template == 'panel/my-account' ? 'class="active"' : '';
-            $user = $app->user;
-            $email = $user->email ? $user->email : '';
-            $this->render('multiple-local-auth--my-account',[
-                'email' => $email,
-                'form_action' => $app->createUrl('panel', 'my-account'),
-                'feedback_success'        => $app->auth->feedback_success,
-                'feedback_msg'    => $app->auth->feedback_msg,
-                'config' => $config,
-                'has_seal_govbr' => $has_seal_govbr,
-                'menssagem_authenticated' => $config['strategies']['govbr']['menssagem_authenticated']
-
-            ]);
-        
-        });
 
         $app->applyHook('auth.provider.init');        
     }
@@ -1334,7 +1296,7 @@ class Provider extends \MapasCulturais\AuthProvider {
         // verifica se a resposta é um erro
         if (array_key_exists('error', $response)) {
 
-            $app->flash('auth error', 'Opauth returns error auth response');
+            $app->halt(500, 'Opauth returns error auth response');
         } else {
             /**
             * Auth response validation
@@ -1343,9 +1305,9 @@ class Provider extends \MapasCulturais\AuthProvider {
             * is sent through GET or POST.
             */
             if (empty($response['auth']) || empty($response['timestamp']) || empty($response['signature']) || empty($response['auth']['provider']) || empty($response['auth']['uid'])) {
-                $app->flash('auth error', 'Invalid auth response: Missing key auth response components.');
+                $app->halt(500, 'Invalid auth response: Missing key auth response components.');
             } elseif (!$this->opauth->validate(sha1(print_r($response['auth'], true)), $response['timestamp'], $response['signature'], $reason)) {
-                $app->flash('auth error', "Invalid auth response: {$reason}");
+                $app->halt(500, "Invalid auth response: {$reason}");
             } else {
                 $valid = true;
             }
