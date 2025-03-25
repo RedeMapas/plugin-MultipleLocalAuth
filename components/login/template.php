@@ -9,6 +9,7 @@ use MapasCulturais\i;
 
 $this->import('
     mc-card
+    login-govbr
     password-strongness
 ');
 ?>
@@ -50,10 +51,12 @@ $this->import('
                         </div>
 
                         <div class="login__social-buttons" :class="{'login__social-buttons--multiple': multiple}">
-                            <a v-if="configs.strategies.govbr?.visible" class="social-login--button button button--icon button--large button--md govbr" href="<?php echo $app->createUrl('auth', 'govbr') ?>">                                
+                            <login-govbr :config="config"></login-govbr>
+                            
+                            <!-- <a v-if="configs.strategies.govbr?.visible" class="social-login--button button button--icon button--large button--md govbr" href="<?php echo $app->createUrl('auth', 'govbr') ?>">                                
                                 <div class="img"> <img height="16" class="br-sign-in-img" src="<?php $this->asset('img/govbr-white.png'); ?>" /> </div>                                
                                 <?= i::__('Entrar com Gov.br') ?>                            
-                            </a>
+                            </a> -->
 
                             <a v-if="configs.strategies.Google?.visible" class="social-login--button button button--icon button--large button--md google" href="<?php echo $app->createUrl('auth', 'google') ?>">                                
                                 <div class="img"> <img height="16" src="<?php $this->asset('img/g.png'); ?>" /> </div>                                

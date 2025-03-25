@@ -11,11 +11,12 @@
 
 
 /* ----- 3: LAYOUT ------- */
-
+@import '3-layouts/l_govbr-certificate';
 
 /* ----- 4: COMPONENTS ------- */
 @import '4-components/c-change-password';
 @import '4-components/c-create-account';
+@import '4-components/c-login-govbr';
 @import '4-components/c-login';
 
 
